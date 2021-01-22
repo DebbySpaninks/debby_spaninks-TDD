@@ -70,20 +70,20 @@ describe('getCostsForCrop', () => {
     test('Get costs for plant', () => {
         const corn = {
             name: 'corn',
-            costs: 20,
+            costs: 10,
         };
-        expect(getCostsForPlant(corn)).toBe(20);
+        expect(getCostsForPlant(corn)).toBe(10);
     });
     test('Get costs for crop', () => {
         const corn = {
             name: 'corn',
-            costs: 2,
+            costs: 1,
         };
         const input = {
             crop: corn,
             numPlants: 10,
         };
-        expect(getCostsForCrop(input)).toBe(20);            // €20 totale kosten van 10 planten
+        expect(getCostsForCrop(input)).toBe(10);
     });
 });
 
@@ -98,14 +98,28 @@ describe('getRevenueForCrop', () => {
         crop: corn,
         numPlants: 10,
     };
-    test('Get revenue for one crop', () => {
+    test('Get revenue for crop', () => {
         expect(getRevenueForCrop(input)).toBe(900);
     });
 });
 
-
-    // get profit for a crop (without environmental factors): getProfitGorCrop                  winst per gewas
-    // 3. bereken de winst voor een veld (zonder omgevingsfactoren): getProfitGorCrop
+// get profit for crop                                           winst per gewas
+// without environment factors
+describe('getProfitForCrop', () => {
+    const corn = {
+        name: 'corn',
+        yield: 30,
+        costs: 1,
+        salePrice: 3,
+    };
+    const input = {
+        crop: corn,
+        numPlants: 10,
+    };
+    test('Get profit for crop', () => {
+        expect(getProfitForCrop(input)).toBe(890);
+    });
+});
 
     // get profit for multiple crops (without environmental factors): getTotalProfit            winst van meerdere gewassen
     // 4. bereken de winst voor meerdere gewassen (zonder omgevingsfactoren): getTotalProfit
