@@ -36,7 +36,7 @@ describe('getYieldForCrop', () => {
     //     // hier moet nog een test uitgeschreven worden
 });
 
-// get total yield (in kilos) from all type of plants (crops)
+// get total yield from all type of plants (crops)
 describe('getTotalYield', () => {
     // multiple crops
     test('Calculate total yield with multiple crops', () => {
@@ -70,9 +70,9 @@ describe('getCostsForCrop', () => {
     test('Get costs for plant', () => {
         const corn = {
             name: 'corn',
-            costs: 10,
+            costs: 5,
         };
-        expect(getCostsForPlant(corn)).toBe(10);
+        expect(getCostsForPlant(corn)).toBe(5);
     });
     test('Get costs for crop', () => {
         const corn = {
@@ -81,9 +81,9 @@ describe('getCostsForCrop', () => {
         };
         const input = {
             crop: corn,
-            numPlants: 10,
+            numPlants: 5,
         };
-        expect(getCostsForCrop(input)).toBe(10);
+        expect(getCostsForCrop(input)).toBe(5);
     });
 });
 
@@ -95,15 +95,14 @@ describe('getRevenueForCrop', () => {
         salePrice: 3,
     };
     const input = {
-        crop: corn,
-        numPlants: 10,
+        crop: corn,                                    // hier alle andere gewassen nog toevoegen ??
     };
     test('Get revenue for crop', () => {
-        expect(getRevenueForCrop(input)).toBe(900);
+        expect(getRevenueForCrop(input)).toBe(90);               /// gewassen toegevoegd? dan deze aanpassen!!
     });
 });
 
-// get profit for crop                                           winst per gewas
+// get profit for crop
 // without environment factors
 describe('getProfitForCrop', () => {
     const corn = {
@@ -114,10 +113,47 @@ describe('getProfitForCrop', () => {
     };
     const input = {
         crop: corn,
-        numPlants: 10,
+        numPlants: 5,
     };
     test('Get profit for crop', () => {
-        expect(getProfitForCrop(input)).toBe(890);
+        expect(getProfitForCrop(input)).toBe(85);     // 90 - 5 (costs)= 85
+    });
+});
+
+describe('getTotalProfit', () => {
+    const corn = {
+        name: 'corn',                      // 3 (salePrice) x 30 (yield) = 90 euro - 5 (costs x numPlants) = 85
+        yield: 30,
+        costs: 1,
+        salePrice: 3,
+    };
+    const pumpkin = {
+        name: 'pumpkin',                   // 5 (salePrice) x 8 (yield) = 40 euro - 2 (costs x numPlants) = 38
+        yield: 8,
+        costs: 1,
+        salePrice: 5,
+    };
+    const avocado = {
+        name: 'avocado',                   // 5 (salePrice) x 20 (yield) = 100 euro - 30 (costs x numPlants) = 70
+        yield: 20,
+        costs: 3,
+        salePrice: 5,
+    };
+    const apple = {
+        name: 'apple',                    // 3 (salePrice) x 45 (yield) = 135 euro - 15 (costs x numPlants) = 120
+        yield: 45,
+        costs: 1,
+        salePrice: 3,
+    };
+
+    const crops = [
+        { crop: corn, numPlants: 5 },
+        { crop: pumpkin, numPlants: 2 },
+        { crop: avocado, numPlants: 10 },
+        { crop: apple, numPlants: 15 },
+    ];
+    test('Get total profit', () => {
+        expect(getTotalProfit({ crops })).toBe(313);
     });
 });
 
