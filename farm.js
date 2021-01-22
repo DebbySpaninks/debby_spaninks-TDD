@@ -12,11 +12,11 @@ const getCostsForPlant = input => input.costs;
 // 1. calculate the costs for crop 
 const getCostsForCrop = input => input.numPlants * getCostsForPlant(input.crop);
 
-// 2. calculate revenue for a crop 
+// 2. calculate revenue for crop 
 const getRevenueForCrop = input => input.crop.salePrice * input.numPlants * input.crop.yield;
 
-// 3. calculate the gain for a crop (without environmental factors): getProfitForCrop
-// 3. bereken de winst voor een gewas (zonder omgevingsfactoren): getProfitForCrop
+// 3. calculate the gain for crop
+const getProfitForCrop = input => getRevenueForCrop(input) - getCostsForCrop(input);
 
 // 4. calculate the profit for multiple crops (without environmental factors): getTotalProfit
 // 4. bereken de winst voor meerdere gewassen(zonder omgevingsfactoren): getTotalProfit
@@ -49,7 +49,7 @@ module.exports = {
     getCostsForPlant,
     getCostsForCrop,
     getRevenueForCrop,
-    // getProfitForCrop,
+    getProfitForCrop,
     // getTotalProfit,
     // arrayWithFruitAndVegetables,
 };
