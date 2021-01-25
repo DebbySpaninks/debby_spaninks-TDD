@@ -50,26 +50,37 @@ function getEnvironmentFactor(crop, environmentFactors) {
     return factor;
 }
 
-// 6. + 7. calculate the yield (in kilos) of a plant with environmental factors
+// 6. + 7. calculate the yield (in kilos) of a plant with environment factors
 const getYieldForPlantWithFactors = (crop, environmentFactors) => crop.yield * getEnvironmentFactor(crop, environmentFactors);
 
-// 9. calculate the yield in kilos of a crop getYieldForCrop, take environmental factors into account in your calculation
-// 9. bereken de opbrengst in kilo's van een crop getYieldForCrop, neem omgevingsfactoren mee in je berekening
+// 9. calculate the yield in kilos of a crop with environment factors
+const getYieldForCropWithFactors = (input, crop, environmentFactors) => input.crop.yield * input.numPlants * getEnvironmentFactor(crop, environmentFactors);
 
-// 10. calculate the profit of a crop getProfitForCrop, include environmental factors in your calculation
-// 10. bereken de winst van een crop getProfitForCrop, neem omgevingsfactoren mee in je berekening
+// // 10. calculate the profit of a crop with environment factors
+// const getProfitForCropWithFactors = (input, crop, environmentFactors) => (getRevenueForCrop(input) - getCostsForCrop(input)) * getEnvironmentFactor(crop, environmentFactors);
 
-// 11. calculate the profit for multiple crops getTotalProfit, include environmental factors in your calculation
-// 11. bereken de winst voor meerdere crops getTotalProfit, neem omgevingsfactoren mee in je berekening
+// // 11. calculate the profit for total crops with environment factors
+// const getTotalProfitWithFactors = (input, factors) => {
+//     let total_profit_with_factors = 0;
+//     input.crops.forEach(crop => {
+//         total_profit_with_factors += getProfitWithFactors(crop, factors);
+//     });
+//     return total_profit_with_factors;
+// }
+
+
 
 module.exports = {
     getYieldForPlant,
     getYieldForPlantWithFactors,
+    getYieldForCropWithFactors,
     getYieldForCrop,
     getTotalYield,
     getCostsForPlant,
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
+    // getProfitForCropWithFactors,
     getTotalProfit,
+    // getTotalProfitWithFactors,
 };
