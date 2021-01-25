@@ -158,12 +158,12 @@ describe('getProfitForCrop', () => {
         expect(getProfitForCrop(input)).toBe(85);     // 90 - 5 (costs)= 85
     });
 
-    // // environment factors
-    // const environmentFactors = { sun: 'high', wind: 'medium' };
+    // environment factors
+    const environmentFactors = { sun: 'high', wind: 'medium' };
 
-    // test('Get yield for crop with environment factors', () => {
-    //     expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(127.5);
-    // });
+    test('Get yield for crop with environment factors', () => {
+        expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(127.5);
+    });
 });
 
 // write test to get profit for multiple crops                               winst van meerdere gewassen

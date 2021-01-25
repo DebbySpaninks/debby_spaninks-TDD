@@ -56,8 +56,8 @@ const getYieldForPlantWithFactors = (crop, environmentFactors) => crop.yield * g
 // 9. calculate the yield in kilos of a crop with environment factors
 const getYieldForCropWithFactors = (input, crop, environmentFactors) => input.crop.yield * input.numPlants * getEnvironmentFactor(crop, environmentFactors);
 
-// // 10. calculate the profit of a crop with environment factors
-// const getProfitForCropWithFactors = (input, crop, environmentFactors) => (getRevenueForCrop(input) - getCostsForCrop(input)) * getEnvironmentFactor(crop, environmentFactors);
+// 10. calculate the profit of a crop with environment factors
+const getProfitForCropWithFactors = (input, crop, environmentFactors) => (getRevenueForCrop(input) - getCostsForCrop(input)) * getEnvironmentFactor(crop, environmentFactors);
 
 // // 11. calculate the profit for total crops with environment factors
 // const getTotalProfitWithFactors = (input, factors) => {
@@ -80,7 +80,7 @@ module.exports = {
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
-    // getProfitForCropWithFactors,
+    getProfitForCropWithFactors,
     getTotalProfit,
     // getTotalProfitWithFactors,
 };
