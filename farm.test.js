@@ -163,13 +163,13 @@ describe('getProfitForCrop', () => {
 
     test('Get yield for crop with environment factors', () => {
         expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(127.5);
-    }); // ik heb deze gecommit (seventh) maar hij haalde hem niet op dus zo nog maar een keer
+    });
 });
 
 // write test to get profit for multiple crops                               winst van meerdere gewassen
 describe('getTotalProfit', () => {
     const corn = {
-        name: 'corn',                      // salePrice x yield = costs x numPlants = 85 x factors
+        name: 'corn',             // salePrice x yield = costs x numPlants = 85 x factors
         yield: 30,
         costs: 1,
         salePrice: 3,
@@ -246,18 +246,14 @@ describe('getTotalProfit', () => {
         { crop: avocado, numPlants: 10 },
         { crop: apple, numPlants: 15 },
     ];
-    const input = {
-        crop: corn,
-        numPlants: 5,
-    };
     test('Get total profit', () => {
         expect(getTotalProfit({ crops })).toBe(313);
     });
 
-    // // environment factors
-    // const environmentFactors = { sun: 'high', wind: 'medium' };
+    // environment factors
+    const environmentFactors = { sun: 'high', wind: 'medium' };
 
-    // test('Get total profit with environment factors', () => {
-    //     expect(getTotalProfitWithFactors(input, corn, environmentFactors)).toBe(127.5);
-    // });
+    test('Get total profit with environment factors', () => {
+        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(127.5);
+    });
 });

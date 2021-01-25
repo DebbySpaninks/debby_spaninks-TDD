@@ -32,7 +32,7 @@ function getEnvironmentFactor(crop, environmentFactors) {
             factor = factor * (100 + crop.factors.sun.low) / 100;
             break;
         case 'medium':
-            factor = factor * (100 + crop.factors.sum.medium) / 100;
+            factor = factor * (100 + crop.factors.sun.medium) / 100;
             break;
         case 'high':
             factor = factor * (100 + crop.factors.sun.high) / 100;
@@ -59,16 +59,11 @@ const getYieldForCropWithFactors = (input, crop, environmentFactors) => input.cr
 // 10. calculate the profit of a crop with environment factors
 const getProfitForCropWithFactors = (input, crop, environmentFactors) => (getRevenueForCrop(input) - getCostsForCrop(input)) * getEnvironmentFactor(crop, environmentFactors);
 
-// // 11. calculate the profit for total crops with environment factors
-// const getTotalProfitWithFactors = (input, factors) => {
-//     let total_profit_with_factors = 0;
-//     input.crops.forEach(crop => {
-//         total_profit_with_factors += getProfitWithFactors(crop, factors);
-//     });
-//     return total_profit_with_factors;
-// }
-
-
+// 11. calculate the profit for total crops with environment factors
+const getTotalProfitWithFactors = (crops, environmentFactors) => {
+    const profitFromAllCrops = crops.map(crop => getProfitForCrop(crop, environmentFactors));
+    return profitFromAllCrops.reduce((total, item) => total + item);
+};
 
 module.exports = {
     getYieldForPlant,
@@ -82,5 +77,5 @@ module.exports = {
     getProfitForCrop,
     getProfitForCropWithFactors,
     getTotalProfit,
-    // getTotalProfitWithFactors,
+    getTotalProfitWithFactors,
 };
