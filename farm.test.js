@@ -1,24 +1,37 @@
 // i replaced numCrops with numPlants because it was confusing
 
-const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForPlant, getCostsForCrop, getRevenueForCrop, getProfitForCrop, getTotalProfit } = require('./farm');
+const { getYieldForPlant, getYieldForPlantWithFactors, getYieldForCrop, getTotalYield, getCostsForPlant, getCostsForCrop, getRevenueForCrop, getProfitForCrop, getTotalProfit } = require('./farm');
 
-// get yield (in kilos) for plant
+// write test to get yield (in kilos) for plant
 describe('getYieldForPlant', () => {
     const corn = {
         name: 'corn',
-        yield: 30,                                                       // 30 kilo opbrengst voor 10 maïsplanten
+        yield: 30,                                  // 30 kilo opbrengst voor 10 maisplanten
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 100,
+                medium: 0,
+                high: -40,
+            }
+        },
     };
-    //  without environment factors
     test('Get yield for plant with no environment factors', () => {
         expect(getYieldForPlant(corn)).toBe(30);
     });
-    // with environment factors
-    // test('Get yield for plant with environment factors', () => {
-    //     expect(getYieldForPlant(corn)).toBe(??);                                        nog aanpassen!!
-    // });
+    // environment factors for corn
+    const environmentFactors = { sun: 'low', wind: 'medium' };
+
+    test('Get yield for plant with environment factors', () => {
+        expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(15);
+    });
 });
 
-// get yield for crop in kilos
+// write test to get yield for crop in kilos
 describe('getYieldForCrop', () => {
     // without environment factors
     test('Get yield for crop, simple', () => {
@@ -32,11 +45,13 @@ describe('getYieldForCrop', () => {
         };
         expect(getYieldForCrop(input)).toBe(30);                             // 30 kilo opbrengst crop
     });
-    //     // with environment factors
-    //     // hier moet nog een test uitgeschreven worden
+    // with environment factors
+
+
+
 });
 
-// get total yield from all type of plants (crops)
+// write test to get total yield from all type of plants (crops)
 describe('getTotalYield', () => {
     // multiple crops
     test('Calculate total yield with multiple crops', () => {
@@ -65,7 +80,7 @@ describe('getTotalYield', () => {
     });
 });
 
-// get costs for a crop                                                              kosten per gewas
+// write test to get costs for a crop                                                              kosten per gewas
 describe('getCostsForCrop', () => {
     test('Get costs for plant', () => {
         const corn = {
@@ -87,7 +102,8 @@ describe('getCostsForCrop', () => {
     });
 });
 
-// get revenue for a crop                                           inkomsten per gewas
+// write test to get revenue for a crop                                           inkomsten per gewas
+// without environment factors
 describe('getRevenueForCrop', () => {
     const corn = {
         name: 'corn',
@@ -95,14 +111,18 @@ describe('getRevenueForCrop', () => {
         salePrice: 3,
     };
     const input = {
-        crop: corn,                                    // hier alle andere gewassen nog toevoegen ??
+        crop: corn,
     };
     test('Get revenue for crop', () => {
-        expect(getRevenueForCrop(input)).toBe(90);               /// gewassen toegevoegd? dan deze aanpassen!!
+        expect(getRevenueForCrop(input)).toBe(90);
     });
+    // with environment factors
+
+
+
 });
 
-// get profit for crop
+// write test to get profit for crop
 // without environment factors
 describe('getProfitForCrop', () => {
     const corn = {
@@ -118,8 +138,15 @@ describe('getProfitForCrop', () => {
     test('Get profit for crop', () => {
         expect(getProfitForCrop(input)).toBe(85);     // 90 - 5 (costs)= 85
     });
+    // with environment factors
+
+
+
+
 });
 
+// write test to get profit for multiple crops                               winst van meerdere gewassen
+// without environment factors
 describe('getTotalProfit', () => {
     const corn = {
         name: 'corn',                      // 3 (salePrice) x 30 (yield) = 90 euro - 5 (costs x numPlants) = 85
@@ -155,10 +182,10 @@ describe('getTotalProfit', () => {
     test('Get total profit', () => {
         expect(getTotalProfit({ crops })).toBe(313);
     });
-});
+    // with environment factors
 
-    // get profit for multiple crops (without environmental factors): getTotalProfit            winst van meerdere gewassen
-    // 4. bereken de winst voor meerdere gewassen (zonder omgevingsfactoren): getTotalProfit
+
+});
 
     // 5. You can do the following steps (6 to 11) in two ways. Way 1: write completely new functions with your own tests. Way 2: adjust the previously written functions so that they can deal with environmental factors but still always do without environmental factors, so the old tests must continue to fit! This means that you do not write new functions, which means that you have to check in the function whether or not relevant environmental factors have been included. Way 2 is a bit more difficult and therefore also a BONUS assignment.
     // 5. Je kan de volgende stappen (6 t/m 11) op twee manieren doen. Manier 1: schrijf volledig nieuwe functies met eigen tests. Manier 2: pas de eerder geschreven functies aan zodat ze kunnen omgaan met omgevingsfactoren maar het nog steeds doen ook zonder omgevingsfactoren. De oude tests moeten dus blijven passen! Je schrijft dan dus geen nieuwe functies. Dit betekent dus dat je in de functie moet checken of er wel/geen relevante omgevingsfactoren zijn meegegeven. Manier 2 is wat moeilijker en dus ook een BONUS-opdracht.
