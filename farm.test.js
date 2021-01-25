@@ -163,7 +163,7 @@ describe('getProfitForCrop', () => {
 
     test('Get yield for crop with environment factors', () => {
         expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(127.5);
-    });
+    }); // ik heb deze gecommit (seventh) maar hij haalde hem niet op dus zo nog maar een keer
 });
 
 // write test to get profit for multiple crops                               winst van meerdere gewassen
