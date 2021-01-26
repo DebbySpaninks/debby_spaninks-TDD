@@ -19,7 +19,7 @@ const getRevenueForCrop = input => input.crop.salePrice * input.crop.yield;
 const getProfitForCrop = input => getRevenueForCrop(input) - getCostsForCrop(input);
 
 // 4. calculate the profit for all crops
-const getTotalProfit = ({ crops }) => {
+const getTotalProfit = crops => {
     const profitFromAllCrops = crops.map(crop => getProfitForCrop(crop));
     return profitFromAllCrops.reduce((total, item) => total + item);
 };
@@ -54,15 +54,17 @@ function getEnvironmentFactor(crop, environmentFactors) {
 const getYieldForPlantWithFactors = (crop, environmentFactors) => crop.yield * getEnvironmentFactor(crop, environmentFactors);
 
 // 9. calculate the yield in kilos of a crop with environment factors
-const getYieldForCropWithFactors = (input, crop, environmentFactors) => input.crop.yield * input.numPlants * getEnvironmentFactor(crop, environmentFactors);
+const getYieldForCropWithFactors = (input, crop, environmentFactors) => input.crop.yield * input.numPlants * getEnvironmentFactor(crop, environmentFactors);                                                                                // deze wordt nu gebruikt om door corn te loopen
 
 // 10. calculate the profit of a crop with environment factors
 const getProfitForCropWithFactors = (input, crop, environmentFactors) => (getRevenueForCrop(input) - getCostsForCrop(input)) * getEnvironmentFactor(crop, environmentFactors);
 
 // 11. calculate the profit for total crops with environment factors
-const getTotalProfitWithFactors = (crops, environmentFactors) => {
-    const profitFromAllCrops = crops.map(crop => getProfitForCrop(crop, environmentFactors));
-    return profitFromAllCrops.reduce((total, item) => total + item);
+const getTotalProfitWithFactors = (crops, environmentFactors) => {       // elk item in crops = input met crops.reduce loop ik er doorheen
+    const getRevenueForAllCrops = input => input.crop.salePrice * input.crop.yield;
+    const getCostsForAllCrops = input => input.numPlants * getCostsForPlant(input.crop);
+    const getProfitForAllCropsWithFactors = crops.reduce((num, input) => num += ((getRevenueForAllCrops(input) - getCostsForAllCrops(input)) * getEnvironmentFactor(input.crop, environmentFactors)), 0);
+    return getProfitForAllCropsWithFactors;
 };
 
 module.exports = {
