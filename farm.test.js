@@ -246,14 +246,15 @@ describe('getTotalProfit', () => {
         { crop: avocado, numPlants: 10 },
         { crop: apple, numPlants: 15 },
     ];
+
     test('Get total profit', () => {
-        expect(getTotalProfit({ crops })).toBe(313);
+        expect(getTotalProfit(crops)).toBe(313);
     });
 
     // environment factors
     const environmentFactors = { sun: 'high', wind: 'medium' };
 
     test('Get total profit with environment factors', () => {
-        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(127.5);
+        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(607.5);           // bedrag van toBe nog aanpassen!!
     });
 });
