@@ -24,10 +24,10 @@ describe('getYieldForPlant', () => {
         expect(getYieldForPlant(corn)).toBe(30);
     });
     // environment factors
-    const environmentFactors = { sun: 'low', wind: 'medium' };
+    const environmentFactors = { sun: 'low', wind: 'high' };
 
     test('Get yield for plant with environment factors', () => {
-        expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(15);
+        expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(9);
     });
 });
 
@@ -57,10 +57,10 @@ describe('getYieldForCrop', () => {
         expect(getYieldForCrop(input)).toBe(30);
     });
 
-    const environmentFactors = { sun: 'high', wind: 'medium' };
+    const environmentFactors = { sun: 'high', wind: 'low' };
 
     test('Get yield for crop with environment factors', () => {
-        expect(getYieldForCropWithFactors(input, corn, environmentFactors)).toBe(45);
+        expect(getYieldForCropWithFactors(input, corn, environmentFactors)).toBe(90);
     });
 });
 
@@ -158,10 +158,10 @@ describe('getProfitForCrop', () => {
         expect(getProfitForCrop(input)).toBe(85);
     });
 
-    const environmentFactors = { sun: 'high', wind: 'medium' };
+    const environmentFactors = { sun: 'high', wind: 'high' };
 
     test('Get yield for crop with environment factors', () => {
-        expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(127.5);
+        expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(76.5);
     });
 });
 
@@ -250,9 +250,9 @@ describe('getTotalProfit', () => {
         expect(getTotalProfit(crops)).toBe(313);
     });
 
-    const environmentFactors = { sun: 'high', wind: 'medium' };
+    const environmentFactors = { sun: 'medium', wind: 'low' };
 
     test('Get total profit with environment factors', () => {
-        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(607.5);
+        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(733.4);
     });
 });
