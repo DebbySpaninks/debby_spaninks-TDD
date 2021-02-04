@@ -1,6 +1,6 @@
 // i replaced numCrops with numPlants because it was confusing
 
-const { getYieldForPlant, getYieldForPlantWithFactors, getYieldForCrop, getYieldForCropWithFactors, getTotalYield, getCostsForPlant, getCostsForCrop, getRevenueForCrop, getProfitForCrop, getProfitForCropWithFactors, getTotalProfit, getTotalProfitWithFactors } = require('./farm');
+const { getYieldForPlant, getYieldForPlantWithFactors, getYieldForCrop, getYieldForCropWithFactors, getTotalYield, getCostsForPlant, getCostsForCrop, getRevenueForPlant, getRevenueForCrop, getProfitForCrop, getProfitForCropWithFactors, getTotalProfit, getTotalProfitWithFactors } = require('./farm');
 
 // write test to get yield (in kilos) for plant
 describe('getYieldForPlant', () => {
@@ -115,6 +115,21 @@ describe('getCostsForCrop', () => {
     });
 });
 
+// write test to get revenue for plant
+describe('getRevenueForPlant', () => {
+    const corn = {
+        name: 'corn',
+        yield: 3,
+        salePrice: 3,
+    };
+    const input = {
+        crop: corn,
+    };
+    test('Get revenue for plant', () => {
+        expect(getRevenueForPlant(input)).toBe(9);
+    });
+});
+
 // write test to get revenue for a crop
 describe('getRevenueForCrop', () => {
     const corn = {
@@ -124,9 +139,10 @@ describe('getRevenueForCrop', () => {
     };
     const input = {
         crop: corn,
+        numPlants: 5,
     };
     test('Get revenue for crop', () => {
-        expect(getRevenueForCrop(input)).toBe(90);
+        expect(getRevenueForCrop(input)).toBe(450);
     });
 });
 
@@ -155,13 +171,13 @@ describe('getProfitForCrop', () => {
         numPlants: 5,
     };
     test('Get profit for crop', () => {
-        expect(getProfitForCrop(input)).toBe(85);
+        expect(getProfitForCrop(input)).toBe(445);
     });
 
     const environmentFactors = { sun: 'high', wind: 'high' };
 
-    test('Get yield for crop with environment factors', () => {
-        expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(76.5);
+    test('Get profit for crop with environment factors', () => {
+        expect(getProfitForCropWithFactors(input, corn, environmentFactors)).toBe(400.5);
     });
 });
 
@@ -247,12 +263,12 @@ describe('getTotalProfit', () => {
     ];
 
     test('Get total profit', () => {
-        expect(getTotalProfit(crops)).toBe(313);
+        expect(getTotalProfit(crops)).toBe(3503);
     });
 
     const environmentFactors = { sun: 'medium', wind: 'low' };
 
     test('Get total profit with environment factors', () => {
-        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(733.4);
+        expect(getTotalProfitWithFactors(crops, environmentFactors)).toBe(8226.2);
     });
 });

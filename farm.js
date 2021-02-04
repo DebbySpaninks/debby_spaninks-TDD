@@ -13,8 +13,10 @@ const getCostsForPlant = input => input.costs;
 // 1. calculate the costs for crop 
 const getCostsForCrop = input => input.numPlants * getCostsForPlant(input.crop);
 
-// 2. calculate revenue for crop 
-const getRevenueForCrop = input => input.crop.salePrice * input.crop.yield;
+// 2. calculate revenue for plant
+const getRevenueForPlant = input => input.crop.salePrice * input.crop.yield;
+// 2. calculate revenue for crop
+const getRevenueForCrop = input => input.numPlants * getRevenueForPlant(input);
 
 // 3. calculate the gain for crop
 const getProfitForCrop = input => getRevenueForCrop(input) - getCostsForCrop(input);
@@ -25,60 +27,20 @@ const getTotalProfit = crops => {
     return profitFromAllCrops.reduce((total, item) => total + item);
 };
 
-// function to calculate yield with environment factors sun and wind
-function getEnvironmentFactor(crop, environmentFactors) {
-    let factor = 1;
-    switch (environmentFactors.sun) {
-        case 'low':
-            factor = factor * (100 + crop.factors.sun.low) / 100;
-            break;
-        case 'medium':
-            factor = factor * (100 + crop.factors.sun.medium) / 100;
-            break;
-        case 'high':
-            factor = factor * (100 + crop.factors.sun.high) / 100;
-    }
-    switch (environmentFactors.wind) {
-        case 'low':
-            factor = factor * (100 + crop.factors.wind.low) / 100;
-            break;
-        case 'medium':
-            factor = factor * (100 + crop.factors.wind.medium) / 100;
-            break;
-        case 'high':
-            factor = factor * (100 + crop.factors.wind.high) / 100;
-    }
-    return factor;
-};
-
-// ----- onderstaand ipv switch statement -----
-
-// function getEnvironmentFactor(crop, environmentFactors) {
-//     // let factor = 1;
-//     const wind = crop => crop.factors === wind;
-//     const sun = crop => crop.factors === sun;
-//     if (crop.factors === wind) return crop.factors.wind.low
-
-// let wind = crop.factors.wind;
-
-// const getEnvironmentFactor = (crop, environmentFactors) {
-// let factor = 1;
-// let factorSun = 'sun' in crop.factors ? factor * (100 + crop.factor.sun.low) / 100;
-// return factorSun;
-// let result = condition ? value1 : value2;
-// let ternary = condition ? true : false;
-// }
-
-// berekening van factor = factor * (100 + crop.factors[factor][level]) / 100;
-// bv dit erin verwerken >>> const calc = (crop, type, factor) => crop.factors[type][factor]
-
-// const factorLevel = ['high', 'medium', 'low'];
-
-// berekening van factor
-// const calcEnvironmentFactor = factor * (100 + crop.factors[factorSun][factorLevel])
-// const factorSun = crop.factors.sun;
-// const factorWind = crop.factors.wind;
-
+// // function to calculate yield with environment factors
+const getEnvironmentFactor = (crop, environmentFactors) => {
+    let result = 1;
+    // loop through keys of environmentfactors
+    Object.keys(environmentFactors).forEach(factor => {
+        if (crop && crop.factors && crop.factors[factor]) {
+            const intensity = environmentFactors[factor];
+            if (crop.factors[factor][intensity] && (typeof crop.factors[factor][intensity] === 'number')) {
+                result *= (100 + crop.factors[factor][intensity]) / 100;
+            }
+        }
+    })
+    return result;
+}
 
 // 6. + 7. calculate the yield (in kilos) of a plant with environment factors
 const getYieldForPlantWithFactors = (crop, environmentFactors) =>
@@ -89,8 +51,10 @@ const getYieldForCropWithFactors = (input, crop, environmentFactors) =>
     input.numPlants * getYieldForPlantWithFactors(crop, environmentFactors);
 
 // 10. calculate the profit of a crop with environment factors
-const getProfitForCropWithFactors = (input, crop, environmentFactors) =>
-    getProfitForCrop(input) * getEnvironmentFactor(crop, environmentFactors);
+const getProfitForCropWithFactors = (input, crop, environmentFactors) => {
+    const result = getProfitForCrop(input) * getEnvironmentFactor(crop, environmentFactors);
+    return Math.round(result * 100) / 100;
+}
 
 // 11. calculate the profit for total of all crops with environment factors
 const getTotalProfitWithFactors = (crops, environmentFactors) => {
@@ -110,6 +74,7 @@ module.exports = {
     getTotalYield,
     getCostsForPlant,
     getCostsForCrop,
+    getRevenueForPlant,
     getRevenueForCrop,
     getProfitForCrop,
     getProfitForCropWithFactors,
